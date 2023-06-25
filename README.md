@@ -1,4 +1,11 @@
-# I-JEPA
+# I-JEPA for low memory computer
+
+Don't forget to increase your paging to up to 100gb
+the program works on cpu only because of gpu oom risks
+
+
+
+# Initial READ ME : I-JEPA
 
 Official PyTorch codebase for I-JEPA (the **Image-based Joint-Embedding Predictive Architecture**) published @ CVPR-23.
 [\[arXiv\]](https://arxiv.org/pdf/2301.08243.pdf) [\[JEPAs\]](https://ai.facebook.com/blog/yann-lecun-advances-in-ai-research/) [\[blogpost\]](https://ai.facebook.com/blog/yann-lecun-ai-model-i-jepa/)
