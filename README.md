@@ -3,7 +3,7 @@
 Don't forget to increase your paging to up to 100gb
 the program works on cpu only because of gpu oom risks
 
-
+---
 
 #### Initial READ ME : I-JEPA
 
