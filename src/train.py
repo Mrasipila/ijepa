@@ -6,6 +6,8 @@
 #
 
 import os
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:25"
+
 
 # -- FOR DISTRIBUTED TRAINING ENSURE ONLY 1 DEVICE VISIBLE PER PROCESS
 try:
@@ -78,11 +80,13 @@ def main(args, resume_preempt=False):
     copy_data = args['meta']['copy_data']
     pred_depth = args['meta']['pred_depth']
     pred_emb_dim = args['meta']['pred_emb_dim']
-    if not torch.cuda.is_available():
+    
+    device = torch.device('cpu')
+    """if not torch.cuda.is_available():
         device = torch.device('cpu')
     else:
         device = torch.device('cuda:0')
-        torch.cuda.set_device(device)
+        torch.cuda.set_device(device)"""
 
     # -- DATA
     use_gaussian_blur = args['data']['use_gaussian_blur']
@@ -166,6 +170,7 @@ def main(args, resume_preempt=False):
         pred_depth=pred_depth,
         pred_emb_dim=pred_emb_dim,
         model_name=model_name)
+        
     target_encoder = copy.deepcopy(encoder)
 
     # -- make data transforms
@@ -195,7 +200,7 @@ def main(args, resume_preempt=False):
             collator=mask_collator,
             pin_mem=pin_mem,
             training=True,
-            num_workers=num_workers,
+            #num_workers=num_workers,
             world_size=world_size,
             rank=rank,
             root_path=root_path,
@@ -218,6 +223,9 @@ def main(args, resume_preempt=False):
         num_epochs=num_epochs,
         ipe_scale=ipe_scale,
         use_bfloat16=use_bfloat16)
+    
+    import torch.distributed as dist
+    dist.init_process_group("gloo", rank=rank, world_size=world_size)
     encoder = DistributedDataParallel(encoder, static_graph=True)
     predictor = DistributedDataParallel(predictor, static_graph=True)
     target_encoder = DistributedDataParallel(target_encoder)
@@ -313,7 +321,7 @@ def main(args, resume_preempt=False):
                     return loss
 
                 # Step 1. Forward
-                with torch.cuda.amp.autocast(dtype=torch.bfloat16, enabled=use_bfloat16):
+                with torch.cuda.amp.autocast(dtype=torch.float16, enabled=use_bfloat16):
                     h = forward_target()
                     z = forward_context()
                     loss = loss_fn(z, h)
