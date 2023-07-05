@@ -9,7 +9,7 @@ Data
 In the config file (configs folder) under data -> root_path select your folder. 
 Inside the folder the dataset look like this, where inside of class1 and class2 folders there are your images. 
 The model should infer the bounding box predictions by itself without labeled image to begin with.
-
+```
 data/
   ├── test/
     ├── class1
@@ -20,7 +20,7 @@ data/
   └── val/
   	├── class1
   	└── class2
-
+```
 
 ---
 
