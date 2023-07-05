@@ -1,7 +1,26 @@
 # I-JEPA Huge for low memory computer
 
-Don't forget to increase your paging to up to 100gb
-the program works on cpu only because of gpu oom risks
+Make sure to increase paging by having approximately 100gb of pagefile size.
+To do that on windows go to Control Panel -> Advanced System Properties -> Performance -> Parameter -> Advanced -> Modify
+This only runs on cpu only because of gpu oom risks (small memory gpu since we are trying to train a Huge IJepa)
+
+Data
+
+In the config file (configs folder) under data -> root_path select your folder. 
+Inside the folder the dataset look like this, where inside of class1 and class2 folders there are your images. 
+The model should infer the bounding box predictions by itself without labeled image to begin with.
+
+data/
+  ├── test/
+    ├── class1
+    └── class2
+  ├── train/
+    ├── class1
+    └── class2
+  └── val/
+  	├── class1
+  	└── class2
+
 
 ---
 
