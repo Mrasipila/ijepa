@@ -6,7 +6,7 @@ This only runs on cpu only because of gpu oom risks (small memory gpu since we a
 
 ## Data
 
-In the config file (configs folder)in the .yaml file you are using under `data -> root_path` select your folder. 
+In the config file (configs folder) in the .yaml file you are using under `data -> root_path` select your folder. 
 Inside the folder the dataset look like this, where inside of class1 and class2 folders there are your images. 
 The model should infer the bounding box predictions by itself without labeled image to begin with.
 ```
