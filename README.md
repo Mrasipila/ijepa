@@ -1,4 +1,4 @@
-# I-JEPA Large for low memory computer
+# I-JEPA Huge for low memory computer
 
 Don't forget to increase your paging to up to 100gb
 the program works on cpu only because of gpu oom risks
